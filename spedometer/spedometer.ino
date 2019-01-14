@@ -1,14 +1,17 @@
 // app settings
-const int pin = 0;      // WeMos pin D3
-const int circ = 2136;  // circumference of the wheel in mm
-const int refresh_rate = 1;   // rate at which to print
+const int pin = 0;          // WeMos pin D3
+const int circ = 2136;      // circumference of the wheel in mm
+const int refresh_rate = 1; // rate at which to print
+
+// metrics
+int odo = 0;
+double km = 0.0;
+float kmph = 0;
+int seconds_elapsed = 0;
 
 // global variables
 const int pin_value = 1;
-int odo = 0;
-double km = 0.0;
 int prev_time = 0;
-float kmph = 0;
 const double km_per_mile = 1.609;
 int prev_tick = 0;
 int time_since = 0;
@@ -45,13 +48,15 @@ void loop() {
         kmph = 0;
       } else {
         kmph = km_per_revolution / (time_since / 1000.0 / 60.0 / 60.0);
+        seconds_elapsed += 1 * refresh_rate;
       }
 
       // print the information
       Serial.println(
-        "Distance: " + String(km/km_per_mile) + 
-        " miles - Speed: " + String(kmph/km_per_mile) + 
-        " mph - Rotations: " + String(odo)
+        String(km/km_per_mile) + "-" +
+        String(kmph/km_per_mile) + "-" +
+        String(odo) + "-" +
+        String(seconds_elapsed)
       );
       prev_time = millis();
   }
