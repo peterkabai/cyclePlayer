@@ -13,7 +13,7 @@ int seconds_elapsed = 0;
 const int pin_value = 1;
 int prev_time = 0;
 const double km_per_mile = 1.609;
-int prev_tick = 0;
+int prev_tick = -3000;
 int time_since = 0;
 const float km_per_revolution = circ / 1000.0 / 1000.0;
 
